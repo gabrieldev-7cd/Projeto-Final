@@ -5,7 +5,7 @@
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>
       <button>
-        <a href="#/about">{{ button }}</a>
+        <a href="/about">{{ button }}</a>
       </button>
     </div>
   </div>

@@ -5,9 +5,9 @@
     </a>
     <h1><a href="/">dindin</a></h1>
     <ul class="menu">
-      <li id="cursos"><a href="#/">Cursos</a></li>
+      <li id="cursos"><a href="/">Cursos</a></li>
       <li id="administrativo">
-        <a href="#/dashboard">Painel administrativo</a>
+        <a href="/dashboard">Painel administrativo</a>
       </li>
     </ul>
   </div>

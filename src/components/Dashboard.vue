@@ -15,21 +15,21 @@
         <tr>
           <td id="aulas">
             <p>Investimento Para Iniciantes</p>
-            <button id="editar"><a href="#/form">editar</a></button>
+            <button id="editar"><a href="/form">editar</a></button>
             <button id="excluir"><a href="#">excluir</a></button>
           </td>
         </tr>
         <tr>
           <td id="aulas">
             <p>Poupando e Rendendo</p>
-            <button id="editar"><a href="#/form">editar</a></button>
+            <button id="editar"><a href="/form">editar</a></button>
             <button id="excluir"><a href="#">excluir</a></button>
           </td>
         </tr>
         <tr>
           <td id="aulas">
             <p>Independência Financeira</p>
-            <button id="editar"><a href="#/form">editar</a></button>
+            <button id="editar"><a href="/form">editar</a></button>
             <button id="excluir"><a href="#">excluir</a></button>
           </td>
         </tr>
