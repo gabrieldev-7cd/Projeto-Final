@@ -6,8 +6,8 @@
 
       <form id="novoCurso" action="">
         <input type="text" placeholder="Titulo" />
-        <input type="accept" placeholder="Upload capa" />
-        <input type="text" placeholder="Professor" />
+        <input type="file" @change="imageChange" accept="image/*"/>
+        <input type="text"  placeholder="Professor" />
         <textarea type="textarea" id="texto" placeholder="Descrição" />
       </form>
 
@@ -36,6 +36,7 @@
 <script>
 import Navbar from "./Navbar.vue";
 import Footer from "./Footer.vue";
+import axios from 'axios';
 
 export default {
   name: "Formulário",
@@ -44,116 +45,81 @@ export default {
     Navbar,
     Footer,
   },
+  data () {
+    return{
+      info: null,
+      ref: 0,
+      image: null
+    }
+  },
+
+  methods:{
+    imageChange(event) {
+      this.image = event.target.files[0];
+    },
+    get(){
+     axios
+      .get("https://localhost:5001/api/Curso")
+      .then((response) => (this.info = response.data))
+      .catch();
+    },
+
+    create() {
+      let formData = new FormData();
+      formData.append("cursoId", 0);
+      formData.append("titulo", "Titulo de teste badaras");
+      formData.append("professor", "Prof Badaras");
+      formData.append("imageFile", this.image);
+
+      axios
+        .post("https://localhost:5001/api/Curso", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function () {
+          console.log("Deu Bom!");
+        })
+        .catch(function () {
+          console.log("Deu Ruim!");
+        });
+    },
+    update() {
+      console.log("Call update!");
+
+      let formData = new FormData();
+      formData.append("cursoId", this.ref);
+      formData.append("titulo", "Titulo modificado!");
+      formData.append("professor", "Prof Modificado!");
+      formData.append("imageFile", this.image);
+
+      axios
+        .post("https://localhost:5001/api/Curso/Edita/" + this.ref, formData, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(function () {
+          console.log("Deu Bom!");
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("Deu Ruim!");
+        });
+    },
+
+     destroy() {
+      console.log("Destroy things");
+      axios
+      .delete("https://localhost:5001/api/Curso/" + this.ref)
+      .then((response) => {
+        console.log("Status >>" + response.status);
+        console.log("Data >>" + response.data);
+        console.log("Header >>" + response.header);
+      });
+    }
+  }
 };
 </script>
 
 <style scoped>
-.container {
-  flex-wrap: wrap;
-}
-.formulario {
-  display: flex;
-  flex-direction: column;
-}
-
-.formulario h3 {
-  margin: 97px 0px 69px 82px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 29px;
-  line-height: 33px;
-  text-transform: capitalize;
-
-  color: #ff4081;
-}
-#novoCurso input {
-  margin: 0px auto 14px 83px;
-  width: 50%;
-  height: 40px;
-  padding: 5px;
-
-  background: #ffffff;
-  border: 1px solid #aeaeae;
-  box-sizing: border-box;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: #404040;
-}
-textarea::placeholder,
-input::placeholder {
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: #404040;
-}
-input {
-  display: flex;
-}
-
-.formulario h4 {
-  margin: 0px 0px 16px 83px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: #419488;
-}
-textarea {
-  margin: 0px 0px 21px 82px;
-  width: 50%;
-  height: 150px;
-
-  background: #ffffff;
-  border: 1px solid #aeaeae;
-  box-sizing: border-box;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: #404040;
-}
-#primeiraAula input {
-  margin: 0px 0px 30px 83px;
-  width: 50%;
-  height: 40px;
-  padding: 5px;
-
-  background: #ffffff;
-  border: 1px solid #aeaeae;
-  box-sizing: border-box;
-}
-button {
-  margin: 43px 0px 163px 83px;
-  max-width: 233px;
-  height: 51px;
-
-  background: #2e948a;
-  border-radius: 62px;
-}
-a {
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 23px;
-  text-align: center;
-
-  color: #ffffff;
-}
+@import '../Style/FormStyle.css';
 </style>

@@ -5,45 +5,19 @@
     <p>Educação é tudo de bom</p>
 
     <div class="aulas">
-      <Conteudo
-        image="cursoIniciante.svg"
-        title="Investimento para iniciantes"
-        text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt."
-        button=" começar agora"
-      />
+        <ul>
+          <li v-for="i in data" :key="i">
+          <Conteudo
+            :image= i.capa
+            :title= i.titulo
+            :text= i.descricao
+            button=" começar agora"
+          />
+          <hr/>
+          </li>
+        </ul>
+       
 
-      <hr />
-
-      <Conteudo
-        image="poupandoERendendo.svg"
-        title="Poupando e Rendendo"
-        text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt."
-        button=" começar agora"
-      />
-
-      <hr />
-
-      <Conteudo
-        image="independenciaFinanceira.svg"
-        title="Independência Financeira"
-        text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt."
-        button=" começar agora"
-      />
     </div>
     <Footer />
   </div>
@@ -53,7 +27,7 @@
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
 import Conteudo from "../components/Conteudo.vue";
-
+import axios from "axios";
 export default {
   name: "Home",
   components: {
@@ -61,6 +35,24 @@ export default {
     Footer,
     Conteudo,
   },
+
+  data () {
+      return{
+        data: null,
+        ref: 0,
+        image: null
+      }
+    },
+
+    mounted(){
+     axios.get("https://localhost:5001/api/Curso")
+      .then((response) => {
+        this.data = response.data;
+        console.log(this.data);
+      })
+    .catch( () => {console.log("Falha ao carregar")});
+  }
+
 };
 </script>
 

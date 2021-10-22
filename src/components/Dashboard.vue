@@ -4,7 +4,6 @@
     <div class="table">
       <h1>Painel Administrativo</h1>
       <p>Educação financeira é tudo de bom</p>
-
       <table>
         <tr>
           <td id="titulo">
@@ -13,24 +12,10 @@
           </td>
         </tr>
         <tr>
-          <td id="aulas">
-            <p>Investimento Para Iniciantes</p>
-            <button id="editar"><a href="/form">editar</a></button>
-            <button id="excluir"><a href="#">excluir</a></button>
-          </td>
-        </tr>
-        <tr>
-          <td id="aulas">
-            <p>Poupando e Rendendo</p>
-            <button id="editar"><a href="/form">editar</a></button>
-            <button id="excluir"><a href="#">excluir</a></button>
-          </td>
-        </tr>
-        <tr>
-          <td id="aulas">
-            <p>Independência Financeira</p>
-            <button id="editar"><a href="/form">editar</a></button>
-            <button id="excluir"><a href="#">excluir</a></button>
+          <td  id="aulas" v-for="i in data" :key="i" >
+            <p>{{i.titulo}}</p>
+            <button id="editar" @click="atualizar(i.cursoId)"><a href="/form/">editar</a></button>
+            <button id="excluir" @click="destroy(i.cursoId)" ><a href="#">excluir</a></button>
           </td>
         </tr>
       </table>
@@ -42,115 +27,46 @@
 <script>
 import Navbar from "./Navbar.vue";
 import Footer from "./Footer.vue";
-
+import axios from 'axios';
 export default {
   name: "Painel Administrativo",
   components: {
     Navbar,
     Footer,
   },
+  data() {
+    return{
+      data: null
+    }
+  },
+  methods:{
+    atualizar(id){
+      this.$router.push('/form/'+id);
+    },
+    destroy(id) {
+    console.log("Destroy things");
+    axios
+      .delete("https://localhost:5001/api/Curso/" + id)
+      .then((response) => {
+        console.log("Status >>" + response.status);
+        console.log("Data >>" + response.data);
+        console.log("Header >>" + response.header);
+      });
+    }
+  },
+  mounted(){
+    
+     axios.get("https://localhost:5001/api/Curso")
+      .then((response) => {
+        this.data = response.data;
+        console.log(this.data);
+      })
+      .catch( () => {console.log("Falha ao carregar")});
+  }
+
 };
 </script>
 
 <style scoped>
-.container {
-  flex-wrap: wrap;
-}
-.container h1 {
-  margin: 81px 0px 0px 82px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 60px;
-  line-height: 69px;
-
-  text-transform: capitalize;
-
-  color: #ff4081;
-}
-.container p {
-  margin: 0px 0px 0px 82px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 23px;
-
-  color: #555555;
-}
-table {
-  margin: 107px 0px 167px 82px;
-  max-width: 812px;
-  border: #000000;
-}
-#titulo {
-  justify-content: space-between;
-  background: #ebebeb;
-}
-#titulo p {
-  margin: 8px 190px 8px 24px;
-  display: flex;
-  max-width: 230px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 28px;
-
-  text-transform: capitalize;
-
-  color: #000000;
-}
-
-#aulas {
-  max-width: 812px;
-  justify-content: space-between;
-  background: #ffffff;
-  border: 1px solid #989898;
-  box-sizing: border-box;
-}
-#aulas p {
-  flex-wrap: wrap;
-  margin: 12px 0px 7px 24px;
-  width: 510px;
-
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-
-  text-transform: capitalize;
-
-  color: #000000;
-}
-#editar {
-  margin: 11px 12px 7px auto;
-  width: 87px;
-  height: 22px;
-
-  background: #f8c23a;
-  color: #ffffff;
-}
-#excluir {
-  margin: 11px 70px 7px 0px;
-  width: 87px;
-  height: 22px;
-
-  color: #ffffff;
-  background: #f8513a;
-}
-tr {
-  flex-wrap: wrap;
-  max-width: 812px;
-  border: 1px solid #989898;
-  box-sizing: border-box;
-}
-td {
-  display: flex;
-  flex-wrap: wrap;
-}
+@import '../Style/DashBoardStyle.css';
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="cursos">
-    <img :src="require(`../assets/images/${image}`)" alt="Imagem" />
+    <img :src="require(`C:/Users/gabriel/Desktop/fogo_no_parquinho/API/DasGalaxiasAPI/DasGalaxiasAPI/Images/${image}`)" alt="Imagem"/>
     <div class="conteudo">
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>
@@ -33,6 +33,9 @@ export default {
 
 .cursos img {
   margin: 95px 0px 68px 112px;
+  width: 100%; 
+  height: 30vw;
+  max-width:30%;
 }
 .conteudo {
   flex-direction: column;
